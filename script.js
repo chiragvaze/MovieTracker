@@ -17,9 +17,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const watchedTab = document.getElementById('watchedTab');
     const wishlistTab = document.getElementById('wishlistTab');
     const statsTab = document.getElementById('statsTab');
+    const userSection = document.getElementById('userSection');
+    const userInfo = document.getElementById('userInfo');
+    const logoutBtn = document.getElementById('logoutBtn');
 
     // Data
     let movies = JSON.parse(localStorage.getItem('movies')) || { watched: [], wishlist: [] };
+
+    // Check login status
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (!loggedInUser) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Show logged in user info
+    userInfo.textContent = `Logged in as: ${loggedInUser}`;
+
+    // Logout function
+    logoutBtn.onclick = () => {
+        localStorage.removeItem('loggedInUser');
+        window.location.href = 'login.html';
+    };
 
     // Render Functions
     function renderList(type) {
