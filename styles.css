@@ -20,6 +20,28 @@ header h1 {
 nav {
     margin-top: 1rem;
 }
+#userSection {
+    text-align: center;
+    margin-top: 1rem;
+}
+#userInfo {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #ff9800;
+}
+#logoutBtn {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#logoutBtn:hover {
+    background: #ff9800;
+    color: #232526;
+}
 nav button {
     background: #333;
     color: #fff;
@@ -142,6 +164,46 @@ footer {
     color: #aaa;
     font-size: 1rem;
     margin-top: 2rem;
+}
+#loginSection, #registerSection {
+    margin-bottom: 2rem;
+    background: rgba(255,255,255,0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+#loginSection h2, #registerSection h2 {
+    margin-top: 0;
+    font-size: 1.3rem;
+    color: #ff9800;
+}
+#loginForm, #registerForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+#loginForm input, #registerForm input {
+    padding: 0.6rem;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    background: #232526;
+    color: #fff;
+    outline: none;
+}
+#loginForm button, #registerForm button {
+    background: #ff9800;
+    color: #232526;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#loginForm button:hover, #registerForm button:hover {
+    background: #ffa726;
 }
 @media (max-width: 800px) {
     main {
