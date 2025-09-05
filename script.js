@@ -1,5 +1,5 @@
 // Movie Tracker App
-// Features: Add, remove, move between lists, stats, localStorage persistence
+// Features: Add, remove, move between lists, stats, backend persistence
 
 document.addEventListener('DOMContentLoaded', function() {
     // Elements
@@ -21,12 +21,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const userInfo = document.getElementById('userInfo');
     const logoutBtn = document.getElementById('logoutBtn');
 
+    // API base URL
+    const API_BASE = 'http://localhost:3001/api';
+
     // Data
-    let movies = JSON.parse(localStorage.getItem('movies')) || { watched: [], wishlist: [] };
+    let movies = { watched: [], wishlist: [] };
 
     // Check login status
+    const token = localStorage.getItem('token');
     const loggedInUser = localStorage.getItem('loggedInUser');
-    if (!loggedInUser) {
+    if (!token || !loggedInUser) {
         window.location.href = 'login.html';
         return;
     }
@@ -36,9 +40,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Logout function
     logoutBtn.onclick = () => {
+        localStorage.removeItem('token');
         localStorage.removeItem('loggedInUser');
         window.location.href = 'login.html';
     };
+
+    // API helper
+    async function apiRequest(endpoint, options = {}) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            ...options
+        };
+        const response = await fetch(`${API_BASE}${endpoint}`, config);
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+        }
+        return response.json();
+    }
+
+    // Load movies from API
+    async function loadMovies() {
+        try {
+            movies = await apiRequest('/movies');
+            renderList('watched');
+            renderList('wishlist');
+            renderStats();
+        } catch (error) {
+            console.error('Error loading movies:', error);
+            alert('Error loading movies');
+        }
+    }
 
     // Render Functions
     function renderList(type) {
@@ -92,38 +126,52 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Actions
-    function addMovie(e) {
+    async function addMovie(e) {
         e.preventDefault();
         const title = movieTitle.value.trim();
         if (!title) return;
         const year = movieYear.value.trim();
         const genre = movieGenre.value.trim();
-        const type = movieListType.value;
-        movies[type].push({ title, year, genre });
-        saveMovies();
-        renderList(type);
-        renderStats();
-        movieForm.reset();
-    }
+        const list_type = movieListType.value;
 
-    function deleteMovie(type, idx) {
-        if (confirm('Delete this movie?')) {
-            movies[type].splice(idx, 1);
-            saveMovies();
-            renderList(type);
-            renderStats();
+        try {
+            const data = await apiRequest('/movies', {
+                method: 'POST',
+                body: JSON.stringify({ title, year, genre, list_type })
+            });
+            await loadMovies();
+            movieForm.reset();
+        } catch (error) {
+            console.error('Error adding movie:', error);
+            alert('Error adding movie');
         }
     }
 
-    function moveMovie(type, idx) {
+    async function deleteMovie(type, idx) {
+        if (!confirm('Delete this movie?')) return;
+        const movie = movies[type][idx];
+        try {
+            await apiRequest(`/movies/${movie.id}`, { method: 'DELETE' });
+            await loadMovies();
+        } catch (error) {
+            console.error('Error deleting movie:', error);
+            alert('Error deleting movie');
+        }
+    }
+
+    async function moveMovie(type, idx) {
         const movie = movies[type][idx];
         const target = type === 'watched' ? 'wishlist' : 'watched';
-        movies[type].splice(idx, 1);
-        movies[target].push(movie);
-        saveMovies();
-        renderList('watched');
-        renderList('wishlist');
-        renderStats();
+        try {
+            await apiRequest(`/movies/${movie.id}`, {
+                method: 'PUT',
+                body: JSON.stringify({ ...movie, list_type: target })
+            });
+            await loadMovies();
+        } catch (error) {
+            console.error('Error moving movie:', error);
+            alert('Error moving movie');
+        }
     }
 
     function saveMovies() {
@@ -156,8 +204,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Init
     movieForm.onsubmit = addMovie;
-    renderList('watched');
-    renderList('wishlist');
-    renderStats();
+    loadMovies();
     showSection('watched');
 });
