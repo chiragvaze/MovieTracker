@@ -33,27 +33,19 @@
             const loginUsername = document.getElementById('loginUsername');
             const loginPassword = document.getElementById('loginPassword');
 
-            loginForm.onsubmit = async function(e) {
+            // Get users from localStorage
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+
+            loginForm.onsubmit = function(e) {
                 e.preventDefault();
                 const username = loginUsername.value.trim();
                 const password = loginPassword.value.trim();
-
-                try {
-                    const response = await fetch('http://localhost:3001/api/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username, password })
-                    });
-                    const data = await response.json();
-                    if (response.ok) {
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('loggedInUser', data.user.username);
-                        window.location.href = 'index.html';
-                    } else {
-                        alert(data.error || 'Login failed');
-                    }
-                } catch (error) {
-                    alert('Error connecting to server');
+                const user = users.find(u => u.username === username && u.password === password);
+                if (user) {
+                    localStorage.setItem('loggedInUser', username);
+                    window.location.href = 'index.html';
+                } else {
+                    alert('Invalid username or password');
                 }
             };
         });
