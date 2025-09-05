@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>🎬 Movie Tracker</h1>
+        <nav>
+            <button id="watchedTab" class="active">Watched</button>
+            <button id="wishlistTab">Wishlist</button>
+            <button id="statsTab">Stats</button>
+        </nav>
+    </header>
+    <main>
+        <section id="addMovieSection">
+            <h2>Add a Movie</h2>
+            <form id="movieForm">
+                <input type="text" id="movieTitle" placeholder="Movie Title" required>
+                <input type="text" id="movieYear" placeholder="Year (optional)">
+                <input type="text" id="movieGenre" placeholder="Genre (optional)">
+                <select id="movieListType">
+                    <option value="watched">Watched</option>
+                    <option value="wishlist">Wishlist</option>
+                </select>
+                <button type="submit">Add Movie</button>
+            </form>
+        </section>
+        <section id="watchedSection" class="movieSection">
+            <h2>Watched Movies</h2>
+            <ul id="watchedList"></ul>
+        </section>
+        <section id="wishlistSection" class="movieSection hidden">
+            <h2>Wishlist</h2>
+            <ul id="wishlist"></ul>
+        </section>
+        <section id="statsSection" class="movieSection hidden">
+            <h2>Statistics</h2>
+            <div id="stats"></div>
+        </section>
+    </main>
+    <footer>
+        <p>Made with ❤️ for movie lovers</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
