@@ -3,30 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Movie Tracker</title>
+    <title>Login - CineTracker</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-    <header>
-        <h1>🎬 Movie Tracker</h1>
-    </header>
-    <main>
-        <section id="loginSection">
-            <h2>Login</h2>
-            <form id="loginForm">
-                <input type="text" id="loginUsername" placeholder="Username" required>
-                <input type="password" id="loginPassword" placeholder="Password" required>
-                <button type="submit">Login</button>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1 class="auth-logo">🎬 CineTracker</h1>
+                <p class="auth-subtitle">Welcome back! Sign in to your account</p>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <div class="input-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="loginUsername" placeholder="Username" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                </div>
+                
+                <button type="submit" class="auth-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </button>
             </form>
-            <p>Don't have an account? <a href="register.html">Register here</a></p>
-        </section>
-    </main>
-    <footer>
-        <p>Made with ❤️ for movie lovers</p>
-    </footer>
+            
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="register.html" class="auth-link">Create one here</a></p>
+            </div>
+        </div>
+        
+        <div class="auth-bg">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const loginForm = document.getElementById('loginForm');
@@ -45,9 +65,21 @@
                     localStorage.setItem('loggedInUser', username);
                     window.location.href = 'index.html';
                 } else {
-                    alert('Invalid username or password');
+                    showError('Invalid username or password');
                 }
             };
+
+            function showError(message) {
+                const existingError = document.querySelector('.error-message');
+                if (existingError) existingError.remove();
+                
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+                loginForm.insertBefore(errorDiv, loginForm.firstChild);
+                
+                setTimeout(() => errorDiv.remove(), 5000);
+            }
         });
     </script>
 </body>
