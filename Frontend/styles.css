@@ -916,3 +916,69 @@ body {
     font-weight: 500;
     margin-top: 0.5rem;
 }
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    border-left: 4px solid var(--primary-color);
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 300px;
+    animation: slideInRight 0.3s ease;
+    transition: opacity 0.3s ease;
+}
+
+.notification.success {
+    border-left-color: var(--success-color);
+}
+
+.notification.error {
+    border-left-color: var(--error-color);
+}
+
+.notification.info {
+    border-left-color: var(--primary-color);
+}
+
+.notification i {
+    color: var(--primary-color);
+}
+
+.notification.success i {
+    color: var(--success-color);
+}
+
+.notification.error i {
+    color: var(--error-color);
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Animation for star pulse */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.star.pulse {
+    animation: pulse 0.3s ease;
+}
