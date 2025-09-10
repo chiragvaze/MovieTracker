@@ -213,6 +213,193 @@ a:hover {
 #loginForm button:hover, #registerForm button:hover {
     background: #ffa726;
 }
+
+/* Rating System Styles */
+.rating-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1 1 100%;
+    margin: 0.5rem 0;
+}
+
+.rating-container label {
+    font-weight: 600;
+    color: #ff9800;
+    font-size: 0.9rem;
+    min-width: 50px;
+}
+
+.star-rating {
+    display: flex;
+    gap: 2px;
+}
+
+.star {
+    font-size: 1.5rem;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    transform: scale(1);
+}
+
+.star:hover {
+    transform: scale(1.2);
+    text-shadow: 0 0 8px rgba(255, 152, 0, 0.8);
+}
+
+.star.active {
+    color: #ff9800;
+    text-shadow: 0 0 10px rgba(255, 152, 0, 0.6);
+}
+
+.star.active:hover {
+    color: #ffa726;
+}
+
+#ratingValue {
+    font-size: 0.9rem;
+    color: #ff9800;
+    font-weight: 600;
+    min-width: 35px;
+}
+
+/* Movie List Rating Display */
+.movie-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.3rem;
+}
+
+.movie-rating .rating-stars {
+    display: flex;
+    gap: 1px;
+}
+
+.movie-rating .rating-star {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.movie-rating .rating-star.filled {
+    color: #ff9800;
+    text-shadow: 0 0 4px rgba(255, 152, 0, 0.4);
+}
+
+.movie-rating .rating-number {
+    font-size: 0.8rem;
+    color: #ff9800;
+    font-weight: 600;
+    margin-left: 0.2rem;
+}
+
+/* Enhanced Movie Info Display */
+.movie-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.movie-main-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.movie-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.movie-meta {
+    font-size: 0.95rem;
+    color: #ff9800;
+}
+
+/* Hover Effects for Interactive Stars */
+.star-rating:hover .star {
+    color: #666;
+}
+
+.star-rating .star:hover,
+.star-rating .star:hover ~ .star {
+    color: #444;
+}
+
+.star-rating .star:hover {
+    color: #ff9800;
+}
+
+.star-rating .star.hovered {
+    color: #ff9800;
+}
+
+/* Responsive Design for Rating */
+@media (max-width: 600px) {
+    .rating-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+    }
+    
+    .star {
+        font-size: 1.3rem;
+    }
+    
+    .movie-rating .rating-star {
+        font-size: 0.8rem;
+    }
+}
+
+/* Beautiful Animation for Stars */
+@keyframes starPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.star.pulse {
+    animation: starPulse 0.3s ease;
+}
+
+/* Enhanced Stats Display for Ratings */
+.rating-stats {
+    background: rgba(255, 152, 0, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border-left: 4px solid #ff9800;
+}
+
+.rating-stats h4 {
+    color: #ff9800;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.avg-rating {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ff9800;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.avg-rating .stars {
+    display: flex;
+    gap: 1px;
+}
+
+.avg-rating .star {
+    font-size: 1rem;
+    cursor: default;
+}
+
 @media (max-width: 800px) {
     main {
         padding: 1rem;
